@@ -22,13 +22,14 @@ async function main() {
 // Configure EJS
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({ extended: true }));
 
 // Basic route
 app.get("/", (req, res) => {
   res.send("Hi I am root !");
 });
 
-// Index route to render listings
+// Index route 
 app.get("/listings", async (req, res) => {
   try {
     const allListings = await Listing.find({});
@@ -37,6 +38,13 @@ app.get("/listings", async (req, res) => {
     console.error(err);
     res.status(500).send("Error fetching listings");
   }
+});
+
+// Show route 
+app.get("/listings/:id", async (req, res) => {
+    let {id} = req.params;
+    const  listing = await Listing.findById(id);
+    res.render("listings/show", { listing }); 
 });
 
 // Test route to create a sample listing (commented out as in your original)
