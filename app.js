@@ -6,6 +6,7 @@ const path = require("path");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
+
 // Connect to MongoDB
 main()
   .then(() => {
@@ -15,19 +16,23 @@ main()
     console.log(err);
   });
 
+
 async function main() {
   await mongoose.connect(MONGO_URL);
 }
+
 
 // Configure EJS
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 
+
 // Basic route
 app.get("/", (req, res) => {
   res.send("Hi I am root !");
 });
+
 
 // Index route 
 app.get("/listings", async (req, res) => {
@@ -40,12 +45,32 @@ app.get("/listings", async (req, res) => {
   }
 });
 
+// New route
+app.get("/listings/new", (req, res) => {
+    res.render("listings/new"); 
+
+})
+
+
 // Show route 
 app.get("/listings/:id", async (req, res) => {
     let {id} = req.params;
     const  listing = await Listing.findById(id);
     res.render("listings/show", { listing }); 
 });
+
+
+
+//Create Route
+app.post("/listings", async (req, res) => {
+  const newListing = new Listing(req.body.listing);
+  await newListing.save();
+  res.redirect("/listings");
+});
+
+
+
+
 
 // Test route to create a sample listing (commented out as in your original)
 // app.get("/testListing", async (req, res) => {
