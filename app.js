@@ -5,6 +5,7 @@ const Listing = require("./models/listing.js");
 const path = require("path");
 
 const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -29,6 +30,9 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method")); // For PUT and DELETE requests
+app.engine("ejs", ejsMate); // Use ejsMate for layout support
+app.use(express.static(path.join(__dirname, "public"))); // Serve static files from 'public' directory
+
 
 // Basic route
 app.get("/", (req, res) => {
@@ -109,6 +113,7 @@ app.delete("/listings/:id", async (req, res) => {
 //   console.log("Sample was saved");
 //   res.send("successful testing");
 // });
+
 
 // Start server
 app.listen(8080, () => {
