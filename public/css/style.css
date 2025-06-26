@@ -19,3 +19,38 @@
     color: black !important;
 
 }
+
+.f-info-links a{
+    text-decoration: none;
+    color: black;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+
+.f-info-links, 
+.f-info-socials,
+.f-info-brand {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.f-info-socials i {
+   margin: 0.2rem;
+   font-size: 1.5rem;
+}
+
+
+.f-info {
+    text-align: center;
+    display: flex;
+    height: 8rem;
+    background-color: rgba(209, 209, 209, 0.7);
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+}
