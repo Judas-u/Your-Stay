@@ -1,27 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WanderLust</title>
-</head>
-<body>
+<% layout('/layouts/boilerplate') %>
 
-    <h1>All Listings</h1> 
-    <form method="POST" action="/listings">
-        <input name="listing[title]" placeholder="enter title" type="text">
-        <br><br>
-        <textarea name="listing[description]" placeholder="enter description" type="text"></textarea>
-        <br><br>
-        <input name="listing[image]" placeholder="enter image URL/Link" type="text">
-        <br><br>
-        <input name="listing[price]" placeholder="enter price" type="number">
-        <br><br>
-        <input name="listing[country]" placeholder="enter country name" type="text">
-        <br><br>
-        <input name="listing[location]" placeholder="enter location" type="text">
-        <br><br>
-        <button type="submit">ADD</button>
-    </form>
+<div class="row">
+    <div class="col-8 offset-2">
+        <h1>Create a New Listing</h1> 
+            <form method="POST" action="/listings">
+                <div class="mb-3">
+                    <label for="tite" class="form-label">Title</label>
+                    <input name="listing[title]" placeholder="Add a catchy title" type="text" class="form-control"> 
+                </div>
+
+                <div class="mb-3">
+                    <label for="tite" class="form-label">Description</label>
+                    <textarea name="listing[description]" type="text" class="form-control"></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="tite" class="form-label">Image</label>
+                    <input name="listing[image]" placeholder="enter image URL/Link" type="text" class="form-control">
+                </div>
+
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="tite" class="form-label">Price</label>
+                        <input name="listing[price]" placeholder="1200" type="number" class="form-control">
+                    </div>
+
+                    <div class="mb-3 col-md-8">
+                        <label for="tite" class="form-label">Country</label>
+                        <input name="listing[country]" placeholder="India" type="text" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="tite" class="form-label">Location</label>
+                    <input name="listing[location]" placeholder="Udaipur, Rajasthan" type="text" class="form-control">
+                </div>
+                <br>
+                <button class="btn btn-danger">ADD</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
