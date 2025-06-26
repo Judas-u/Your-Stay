@@ -1,3 +1,21 @@
-body {
-    background-color: rgb(196, 231, 245);
+/* body {
+    background-color: rgb(168, 217, 237);
+} */
+
+.navbar {
+    height: 5rem;
+    background-color: rgba(255, 255, 255, 0.7); /* semi-transparent white */
+    backdrop-filter: blur(10px);               /* frosted glass effect */
+    -webkit-backdrop-filter: blur(10px);       /* Safari support */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.fa-compass {
+    color: #fa5252;
+    font-size: 2rem;
+}
+
+.nav-link{
+    color: black !important;
+
 }
