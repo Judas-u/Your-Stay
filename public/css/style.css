@@ -116,4 +116,20 @@ body {
 
 /* Edit Page */
 
+ 
+/* Show Page */
+
+.show-img {
+    height: 40vh;
+
+}
+.btns {
+    display: flex;;
+}
+
+.show-card {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 
