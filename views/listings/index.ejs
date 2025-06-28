@@ -1,33 +1,36 @@
 <% layout('/layouts/boilerplate') %>
 
-  <body>
-    <h3>All Listings</h3>
-    <!-- <form method="GET" action="/listings/new">
-      <button>Create New Listing</button>
-    </form> -->
+<h3 class="mb-4">All Listings</h3>
 
-    <div class="row  row-cols-lg-3  row-cols-md-2  row-cols-sm-1">
-      <% for(let listing of allListings) { %>
-
-      <a href="/listings/<%= listing._id %>" class="listing-link">
-        <div class="card col" >
-          <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
-
-          <div class="card-img-overlay">WanderLust</div>
-          <div class="card-body">
-            <p class="card-text">
-              <b><%= listing.title %> <br></b>
-              &#8377; <%=  listing.price ? listing.price.toLocaleString("en-IN") + ' / night' : 'Price not available' %> <br>
-            </p>
-          </div>
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+  <% for (let listing of allListings) { %>
+    <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+      <div class="card h-100">
+        <img src="<%= listing.image?.url || '/images/placeholder.jpg' %>" 
+             class="card-img-top" 
+             alt="listing_image"
+             style="height: 20rem; object-fit: cover;">
+             
+        <div class="card-img-overlay text-white fw-light" style="background-color: rgba(0,0,0,0.4);">
+          WanderLust
         </div>
-      </a>
-    <% } %>
-    </div>
 
-    <ul>
-      <% for(let listing of allListings) { %>
-        <li><a href="/listings/<%= listing._id %>"> <%= listing.title %> </a></li>
-      <% } %>
-    </ul>
-  </body>
+        <div class="card-body">
+          <p class="card-text">
+            <b><%= listing.title %><br></b>
+            <% if (listing.price !== undefined && listing.price !== null) { %>
+              ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+            <% } else { %>
+              Price not available
+            <% } %>
+          </p>
+        </div>
+      </div>
+    </a>
+  <% } %>
+</div>
+
+
+
+
+
