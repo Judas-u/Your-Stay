@@ -99,22 +99,6 @@ app.delete("/listings/:id", async (req, res) => {
 });
 
 
-// Test route to create a sample listing (commented out as in your original)
-// app.get("/testListing", async (req, res) => {
-//   let sampleListing = new Listing({
-//     title: "Beachside Stay",
-//     description: "By the beach",
-//     price: 1200,
-//     location: "Calangute, Goa",
-//     country: "India",
-//   });
-
-//   await sampleListing.save();
-//   console.log("Sample was saved");
-//   res.send("successful testing");
-// });
-
-
 // Start server
 app.listen(8080, () => {
   console.log("Server is listening on port 8080");
