@@ -76,6 +76,9 @@ app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
 
 // Update Route
 app.put("/listings/:id", wrapAsync(async (req, res) => {
+  if(!req.body.listing) {
+    throw new ExpressError("Send a valid Data fir Listings", 400);
+  }
   const { id } = req.params;
   await Listing.findByIdAndUpdate(id, { ...req.body.listing });
   res.redirect(`/listings/${id}`);
@@ -90,6 +93,7 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
   }
   res.redirect("/listings");
 }));
+
 
 // 404 Handler
 app.all("*", (req, res, next) => {
