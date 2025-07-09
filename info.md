@@ -7,5 +7,6 @@
 6. npm i method-override
 7. npm install method-override --save
 8. npm i ejs-mate
+9. npm i joi
 
 
