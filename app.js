@@ -1,26 +1,20 @@
 const express = require('express');
 const app = express();  
 const mongoose = require("mongoose");
-const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 
 const ExpressError = require("./utils/ExpressError");
-const wrapAsync = require('./utils/wrapAsync');
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
-const {listingSchema, reviewSchema} = require("./schema.js");
-const  Review = require("./models/review.js");
 
 const listings  = require("./routes/listing.js");
-
-
+const reviews = require("./routes/reviews.js");
 
 // Connect to MongoDB
 async function main() {
   await mongoose.connect(MONGO_URL);
 }
-
 main()
   .then(() => {
     console.log("Connected to MongoDB");
@@ -43,47 +37,10 @@ app.get("/", (req, res) => {
 });
 
 
- 
-
-// ✅ Corrected: Validate Review
-const validateReview = (req, res, next) => {
-  const { error } = reviewSchema.validate(req.body);  // ← Fixed
-  if (error) {
-    const errMsg = error.details.map(el => el.message).join(", ");
-    throw new ExpressError(errMsg, 400);
-  } else {
-    next();
-  }
-};
-
+//  Path -> routes/listing
 app.use("/listings", listings);
-
-
-
-
-
-// Post Reviwes Route
-app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req, res) => {
-  let listing = await Listing.findById(req.params.id);
-  let newReview = new Review(req.body.review);
-  
-  listing.reviews.push(newReview);
-  await newReview.save();
-  await listing.save();
-  
-  console.log("new review saved");
-  res.redirect(`/listings/${listing._id}`);  // ✅ only redirect
-}));
-
-// Delete Review Route
-app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) => {  
-  const { id, reviewId } = req.params;
-
-  await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
-  await Review.findByIdAndDelete(reviewId);
-
-  res.redirect(`/listings/${id}`);
-}));
+//  Path -> routes/reviews
+app.use("/listings/:id/reviews", reviews);
 
 
 // 404 Handler
