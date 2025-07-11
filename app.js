@@ -40,20 +40,22 @@ app.get("/", (req, res) => {
 });
 
 
+// Validate Listing
 const validateListing = (req, res, next) => {
-  let {error} = listingSchema.validate(req.body);
+  const { error } = listingSchema.validate(req.body);
   if (error) {
-    let errMsg = error.details.map(el => el.message).join(", ");
+    const errMsg = error.details.map(el => el.message).join(", ");
     throw new ExpressError(errMsg, 400);
   } else {
     next();
   }
 };
 
+// ✅ Corrected: Validate Review
 const validateReview = (req, res, next) => {
-  let {error} = listingSchema.validate(req.body);
+  const { error } = reviewSchema.validate(req.body);  // ← Fixed
   if (error) {
-    let errMsg = error.details.map(el => el.message).join(", ");
+    const errMsg = error.details.map(el => el.message).join(", ");
     throw new ExpressError(errMsg, 400);
   } else {
     next();
@@ -75,7 +77,7 @@ app.get("/listings/new", (req, res) => {
 // Show route 
 app.get("/listings/:id", wrapAsync(async (req, res) => {
   const { id } = req.params;
-  const listing = await Listing.findById(id);
+  const listing = await Listing.findById(id).populate("reviews");
   if (!listing) {
     throw new ExpressError("Listing not found", 404);
   }
