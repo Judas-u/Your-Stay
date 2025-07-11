@@ -11,6 +11,8 @@ const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 const listings  = require("./routes/listing.js");
 const reviews = require("./routes/reviews.js");
 
+const session = require("express-session")
+
 // Connect to MongoDB
 async function main() {
   await mongoose.connect(MONGO_URL);
@@ -30,6 +32,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
+
+const sessionOptions = {
+  secret: "babjikibooty",
+  resave: false,
+  saveUninitialized: true,
+}
+
+app.use(session(sessionOptions));
+
 
 // Basic route
 app.get("/", (req, res) => {

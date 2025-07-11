@@ -8,5 +8,7 @@
 7. npm install method-override --save
 8. npm i ejs-mate
 9. npm i joi
+10. npm i cookie-parser
+11. npm in express-session
 
 
