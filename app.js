@@ -33,10 +33,17 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
+// cookies Session
+
 const sessionOptions = {
   secret: "babjikibooty",
   resave: false,
   saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7
+  }
 }
 
 app.use(session(sessionOptions));
