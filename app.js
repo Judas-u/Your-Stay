@@ -12,6 +12,7 @@ const listings  = require("./routes/listing.js");
 const reviews = require("./routes/reviews.js");
 
 const session = require("express-session")
+const flash = require("connect-flash");
 
 // Connect to MongoDB
 async function main() {
@@ -46,14 +47,19 @@ const sessionOptions = {
   }
 }
 
-app.use(session(sessionOptions));
-
-
 // Basic route
 app.get("/", (req, res) => {
   res.send("Hi I am root!");
 });
 
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+})
 
 //  Path -> routes/listing
 app.use("/listings", listings);
