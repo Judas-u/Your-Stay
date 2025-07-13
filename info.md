@@ -11,6 +11,7 @@
 10. npm i cookie-parser
 11. npm in express-session
 12. npm i connect-flash
-13. npm i passport-local-mongoose
+13. npm install passport passport-local
+
 
 
