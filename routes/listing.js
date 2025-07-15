@@ -38,7 +38,7 @@ router.get("/:id", wrapAsync(async (req, res) => {
     .populate("owner")         
     .populate("reviews");      
   if (!listing) {
-    req.flash("error", "Listing not found");
+    req.flash("error", "Listing you requested does not exist!");
     return res.redirect("/listings");
   }
   res.render("listings/show", { listing });
