@@ -1,22 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync");
-const ExpressError = require("../utils/ExpressError");
 const Listing = require("../models/listing.js");
-const { listingSchema } = require("../schema.js");
-const { isLoggedIn } = require("../middleware.js");
-
-// Validate Listing
-const validateListing = (req, res, next) => {
-  const { error } = listingSchema.validate(req.body);
-  if (error) {
-    const errMsg = error.details.map((el) => el.message).join(", ");
-    throw new ExpressError(errMsg, 400);
-  } else {
-    next();
-  }
-};
-
+const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
+ 
 // Index route
 router.get(
   "/",
@@ -62,6 +49,7 @@ router.post(
 router.get(
   "/:id/edit",
   isLoggedIn,
+  isOwner,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const listing = await Listing.findById(id);
@@ -77,6 +65,7 @@ router.get(
 router.put(
   "/:id",
   isLoggedIn,
+  isOwner,
   validateListing,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
@@ -90,6 +79,7 @@ router.put(
 router.delete(
   "/:id",
   isLoggedIn,
+  isOwner,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const deletedListing = await Listing.findByIdAndDelete(id);
