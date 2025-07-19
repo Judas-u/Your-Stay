@@ -80,15 +80,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get("/demouser", async (req, res) => {
-//   const fakeUser = new User({
-//     email: "student@gamil.com",
-//     username: "delta-student",
-//   });
-//   let registeredUser = await User.register(fakeUser, "password");
-//   res.send(registeredUser);
-// });
-
 
 //  Path -> routes/listing
 app.use("/listings", listingRouter);
