@@ -14,5 +14,5 @@
 13. npm install passport passport-local
 14. npm i multer
 15. npm install dotenv --save
-
-
+16. npm i cloudinary
+17. npm install multer-storage-cloudinary --legacy-peer-deps
