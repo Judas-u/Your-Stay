@@ -135,3 +135,9 @@ body {
 }
 
 
+/* MAP */
+
+#map {
+    height : 400px;
+    width : 800px;
+}
