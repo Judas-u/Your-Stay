@@ -26,12 +26,16 @@ const listingSchema = new Schema({
   type: {
     type: String,
     enum: ["Point"],
-    required: false, // Make it optional
+    required: true, // Make it optional
   },
   coordinates: {
     type: [Number],
-    required: false, // Make it optional
+    required: true, // Make it optional
   },
+},
+category : {
+  type:String,
+  enum:["mountains", "arcatic", "farms", "deserts"]
 }
 });
 
