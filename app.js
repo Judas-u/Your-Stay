@@ -11,7 +11,9 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 
 const ExpressError = require("./utils/ExpressError.js");
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+
+const dbUrl = process.env.ATLASDB_URL;
 
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/reviews.js");
@@ -26,7 +28,7 @@ const User = require("./models/user.js");
 
 // Connect to MongoDB
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(dbUrl);
 }
 main()
   .then(() => {
