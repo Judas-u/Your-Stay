@@ -4,6 +4,7 @@
   #filters {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
   }
   .filter {
     text-align: center;
@@ -18,7 +19,22 @@
   }
 
   .filter p {
-    font-size: 0.9rem;
+    font-size: 1rem;
+  }
+
+  .tax-info {
+    display:none;
+  }
+
+  .tax-toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3.25rem;
+    padding:1rem;
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+
   }
 </style>
 
@@ -65,6 +81,16 @@
     <p>Arcatic</p>
   </div>
 
+  <div class="filter">
+    <div><i class="fa-solid fa-igloo"></i></div>
+    <p>Domes</p>
+  </div>
+
+  <div class="filter">
+    <div><i class="fa-solid fa-ship"></i></div>
+    <p>Boats</p>
+  </div>
+
   <div class="tax-toggle">
     <div class="form-check-reverse form-switch">
       <input
@@ -74,7 +100,7 @@
         id="switchCheckDefault"
       />
       <label class="form-check-label" for="switchCheckDefault"
-        >Display Taxes</label
+        >Display total after taxes</label
       >
     </div>
   </div>
@@ -104,6 +130,7 @@
           <% if (listing.price !== undefined && listing.price !== null) { %> ₹
           <%= listing.price.toLocaleString("en-IN") %> / night <% } else { %>
           Price not available <% } %>
+          <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
         </p>
       </div>
     </div>
@@ -114,6 +141,9 @@
 <script>
   let taxSwitch = document.getElementById("switchCheckDefault");
   taxSwitch.addEventListener("click",() => {
-    console.log("click");
+    let taxInfo = document.getElementsByClassName("tax-info");
+    for(info of taxInfo) {
+      info.style.display = taxSwitch.checked ? "inline" : "none";
+    }
   })
 </script>
