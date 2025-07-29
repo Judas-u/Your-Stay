@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-console.log(process.env.SECRET) 
+// console.log(process.env.SECRET) 
 
 const express = require("express");
 const app = express();
@@ -56,7 +56,7 @@ const store = MongoStore.create({
  touchAfter: 24 * 3600,
 })
 
-store.on("error" , () => {
+store.on("error" , (err) => {
   console.log("Error in MONGO SESSION STORE", err)
 });
 
@@ -110,9 +110,11 @@ app.all("*", (req, res, next) => {
 
 // Error Handler
 app.use((err, req, res, next) => {
-  const { statusCode = 500, message = "Something went wrong" } = err;
-  res.status(statusCode).render("error", { message });
+  const { statusCode = 500 } = err;
+  console.error("Error:", err); // log full error
+  res.status(statusCode).render("error", { message: err.message || "Something went wrong" });
 });
+
 
 // Start server
 app.listen(8080, () => {
