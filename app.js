@@ -93,24 +93,68 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
-// ✅ Root Route for Render and manual test
+// Root Route - FIXED: Uncommented and added redirect to listings
+app.get("/", (req, res) => {
+  res.redirect("/listings");
+});
+
+// Alternative root route options (choose one):
+// Option 1: Simple welcome message
 // app.get("/", (req, res) => {
-//   res.send("🏡 WanderLust is Live!");
+//   res.send("🏡 WanderLust is Live! <a href='/listings'>View Listings</a>");
 // });
 
-// 404 Handler
+// Option 2: Render home page (if you have home.ejs)
+// app.get("/", (req, res) => {
+//   res.render("home");
+// });
+
+// Health check endpoint for monitoring
+app.get("/health", (req, res) => {
+  res.status(200).json({ 
+    status: "OK", 
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
+// 404 Handler - Enhanced with logging
 app.all("*", (req, res, next) => {
+  console.log(`404 - Missing route: ${req.method} ${req.originalUrl}`);
   next(new ExpressError("Page not found!", 404));
 });
 
-// Global Error Handler
+// Global Error Handler - Enhanced
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
-  console.error("Error:", err);
-  res.status(statusCode).render("error", { message: err.message || "Something went wrong" });
+  console.error("Error:", {
+    message: err.message,
+    statusCode,
+    stack: err.stack,
+    url: req.originalUrl,
+    method: req.method,
+    timestamp: new Date().toISOString()
+  });
+  
+  // Check if error view exists, otherwise send JSON
+  res.status(statusCode);
+  
+  try {
+    res.render("error", { 
+      message: err.message || "Something went wrong",
+      statusCode 
+    });
+  } catch (renderError) {
+    // Fallback if error.ejs doesn't exist
+    res.json({ 
+      error: err.message || "Something went wrong",
+      statusCode 
+    });
+  }
 });
 
-// Start Server
-app.listen(8080, () => {
-  console.log("Server is listening on port 8080");
+// Start Server - Use PORT from environment or default to 8080
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
 });
