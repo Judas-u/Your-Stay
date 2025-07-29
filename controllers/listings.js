@@ -90,7 +90,7 @@ module.exports.updateListing = async (req, res) => {
 
 	if (!listing) {
 		req.flash("error", "Listing not found!");
-		return res.redirect("/listings");
+		return res.redirect("/listings");  
 	}
 
 	if (req.file) {
@@ -108,10 +108,11 @@ module.exports.destroyListing = async (req, res) => {
 	const { id } = req.params;
 	const listing = await Listing.findById(id);
 
-	if (!listing) {
+		if (!listing) {
 		req.flash("error", "Cannot delete: Listing not found!");
-		return res.redirect("/listings");
+		return res.redirect("/listings");  
 	}
+
 	await Listing.findByIdAndDelete(id);
 	req.flash("success", "Successfully deleted listing!");
 	res.redirect("/listings");
