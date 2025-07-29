@@ -67,9 +67,8 @@ module.exports.createListing = async (req, res, next) => {
         res.redirect(`/listings/${newListing._id}`);
     } catch (err) {
         // Handle errors properly
-        req.flash("error", "Failed to create listing");
-        console.error("Listing creation error:", err);
-        res.redirect("/listings/new");
+         console.error("Listing creation error:", err);
+  		return next(err); // ✅ pass error to Express error handler
     }
 };
 
