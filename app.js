@@ -94,9 +94,9 @@ app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
 // ✅ Root Route for Render and manual test
-app.get("/", (req, res) => {
-  res.send("🏡 WanderLust is Live!");
-});
+// app.get("/", (req, res) => {
+//   res.send("🏡 WanderLust is Live!");
+// });
 
 // 404 Handler
 app.all("*", (req, res, next) => {
