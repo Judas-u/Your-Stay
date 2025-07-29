@@ -20,6 +20,7 @@ const reviewRouter = require("./routes/reviews.js");
 const userRouter = require("./routes/user.js");
 
 const session = require("express-session");
+const MongoStore = require('connect-mongo')
 const flash = require("connect-flash");
 
 const passport = require("passport");
@@ -47,8 +48,20 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "public")));
 
 // cookies Session
+const store = MongoStore.create({
+ mongoUrl: dbUrl,
+ crypto: {
+   secret : "mysupersecretcode"
+ },
+ touchAfter: 24 * 3600,
+})
+
+store.on("error" , () => {
+  console.log("Error in MONGO SESSION STORE", err)
+});
 
 const sessionOptions = {
+  store,
   secret: "babjikibooty",
   resave: false,
   saveUninitialized: true,
@@ -63,6 +76,7 @@ const sessionOptions = {
 // app.get("/", (req, res) => {
 //   res.send("Hi I am root!");
 // });
+
 
 app.use(session(sessionOptions));
 app.use(flash());

@@ -17,3 +17,5 @@
 16. npm i cloudinary
 17. npm install multer-storage-cloudinary --legacy-peer-deps
 18. npm install @mapbox/mapbox-sdk --legacy-peer-deps
+19. npm install connect-mongo --legacy-peer-deps
+
