@@ -4,7 +4,7 @@ const map = new mapboxgl.Map({
   container: "map", // container ID
   style: "mapbox://styles/mapbox/streets-v12", // style URL
   center: listing.geometry.coordinates, // starting position [lng, lat]
-  zoom: 9, // starting zoom
+  zoom: 10, // starting zoom
 });
 
 const marker1 = new mapboxgl.Marker({ color: 'red', rotation: 0 })
